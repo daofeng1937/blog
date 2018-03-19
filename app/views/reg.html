@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<h3>注册页</h3>
+	<form action="/reg" method="post">
+		<fieldset>
+			<legend>注册</legend>
+			用户名: <input class="usernames" type="text" name="username" value=""><span class="userText"></span><br><br>
+			密码 :  <input class="password" type="password" name="password" value=""><br><br>
+			获取验证码：<input class="phone" type="number" name="phone" value="">
+						<button type="button" class="send">发送</button><br><br>
+			输入验证码: <input type="text" name="code" value=""><br><br>						
+					<input type="submit" value="提交">
+		</fieldset>
+	</form>
+	<script src="/js/jquery.min.js"></script>
+	<script>
+	$(function(){
+		$('.usernames').blur(function(){
+			var value = $(this).val();
+			var reg = /^\w{4,20}$/;
+			if(!reg.test(value)){
+				$('.userText').text('字母数字下划线');
+				return;
+			}
+			$.post('/checkUsername',{username:value},function(msg){
+				if(msg.success == 1){
+					$('.userText').text('用户名已存在');
+				}else{
+					$('.userText').text('用户名可以');
+				}
+			})
+		})
+		$('.send').click(function(){
+			var value = $('.phone').val();
+			$.post('/send',{phone:value},function(msg){
+				if(msg.success == 1){
+					alert('发送成功');
+				}else{
+					alert('发送失败');
+				}
+			})
+		})
+	})
+	</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>nodeJs</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/sb.admin/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/sb.admin/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/sb.admin/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+	<div id="wrapper">
+	   <!-- Navigation -->
+		<%- include ../nav.html %>
+     
+ 
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+				 <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            文章内容首页
+                        </h1>
+                    </div>
+                </div>
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table col-md-12">
+							<tr>
+								<td colspan="6">
+									<form action="" method="" class="form-inline">
+									  <div class="form-group">
+									    <label for="exampleInputName2">查找文章名:</label>
+									    <input type="text" name="articalname" class="form-control" id="articalname" value="<%=query.articalname%>">
+									  </div>
+									  <button type="submit" class="btn btn-success">提交</button>
+									</form>
+								</td>
+							</tr>
+							<tr>
+								<th>编号</th>
+								<th>文章名</th>
+								<th>所属分类</th>
+								<th>添加时间</th>
+								<th>注册时间</th>
+								<th>操作</th>
+							</tr>
+							<%arts.forEach(function(value,key){%>
+							<tr>
+								<td><%=value._id%></td>
+								<td><%=value.articalname%></td>
+								<td><%=value.type.typename%></td>
+								<td><%=moment(value.createdAt).format('YYYY-MM-DD HH:mm:ss')%></td>
+								<td><%=moment(value.updatedAt).format('YYYY-MM-DD HH:mm:ss')%></td>
+								<td>
+									<a class="btn btn-warning btn-xs" href="/artical/remove/<%=value._id%>">删除</a>
+									<a class="btn btn-danger  btn-xs" href="/artical/update/<%=value._id%>">修改</a>
+								</td>
+							</tr>
+							<%})%>
+							<tr>
+								<td colspan="6">
+									<nav aria-label="Page navigation">
+									  <ul class="pagination">
+									    <li>
+									      <a href="?<%=str%>page=<%=page.prevPage%>" aria-label="Previous">
+									        <span aria-hidden="true">上一页</span>
+									      </a>
+									    </li>
+								   		<%for(var i = 1 ;i<=page.totalPage ;i++){%>
+										<li class="<%=page.nowPage == i ? 'active' : ''%>"><a href="?<%=str%>page=<%=i%>"><%=i%></a></li>
+										<%}%>
+									    <li>
+									      <a href="?<%=str%>page=<%=page.nextPage%>" aria-label="Next">
+									        <span aria-hidden="true">下一页</span>
+									      </a>
+									    </li>
+									  </ul>
+									</nav>	
+								</td>
+							</tr>
+
+						</table>
+					</div>
+				</div>
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+	<script src="/sb.admin/js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/sb.admin/js/bootstrap.min.js"></script>
+</body>
+</html>
